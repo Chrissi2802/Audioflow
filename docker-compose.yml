@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  audioflow:
+    build: .
+    volumes:
+      - ./downloads:/downloads
+      - ./urls:/urls:ro
+    environment:
+      - AUDIOFLOW_OUTPUT_DIR=/downloads
+    command: ["batch", "/urls/urls.txt", "--output", "/downloads"]
+    
+  audioflow-dev:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app
+      - ./downloads:/downloads
+    environment:
+      - AUDIOFLOW_OUTPUT_DIR=/downloads
+    working_dir: /app
+    command: ["bash"]
